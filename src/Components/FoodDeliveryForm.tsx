@@ -11,7 +11,11 @@ type FoodDeliveryFormType = {
 const RenderCount = useRenderCount();
 
 export default function FoodDeliveryForm() {
-  const { register, handleSubmit, formState } = useForm<FoodDeliveryFormType>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FoodDeliveryFormType>({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -71,10 +75,8 @@ export default function FoodDeliveryForm() {
               className="form-control border border-white-400 px-4"
               placeholder="Mobile"
             />
-            {formState.errors.mobile && (
-              <p className="text-red-500 text-sm">
-                {formState.errors.mobile.message}
-              </p>
+            {errors.mobile && (
+              <p className="text-red-500 text-sm">{errors.mobile.message}</p>
             )}
           </div>
         </div>
@@ -95,9 +97,9 @@ export default function FoodDeliveryForm() {
               className="form-control border border-white-400 px-4"
               placeholder="Customer Name"
             />
-            {formState.errors.customerName && (
+            {errors.customerName && (
               <p className="text-red-500 text-sm">
-                {formState.errors.customerName.message}
+                {errors.customerName.message}
               </p>
             )}
           </div>
@@ -115,10 +117,8 @@ export default function FoodDeliveryForm() {
               className="form-control border border-white-400 px-4"
               placeholder="Email"
             />
-            {formState.errors.email && (
-              <p className="text-red-500 text-sm">
-                {formState.errors.email.message}
-              </p>
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
             )}
           </div>
         </div>
