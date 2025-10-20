@@ -16,7 +16,7 @@ export default function FoodDeliveryForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<FoodDeliveryFormType>({
-    mode: "onSubmit",
+    mode: "onChange",
     reValidateMode: "onSubmit",
     defaultValues: {
       orderNo: new Date().valueOf(),
@@ -111,6 +111,20 @@ export default function FoodDeliveryForm() {
                 pattern: {
                   message: "Incorrect Format",
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                },
+                validate: {
+                  notFake: (value) => {
+                    return (
+                      value != "email@gmail.com" || "This email is not allowed"
+                    );
+                  },
+                  notFromBlackListedDomain: (value) => {
+                    return (
+                      (!value.endsWith("@xyz.com") &&
+                        !value.endsWith("@example.com")) ||
+                      "This domain is not allowed"
+                    );
+                  },
                 },
               })}
               type="pattern"
