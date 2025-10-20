@@ -1,5 +1,6 @@
 import { useForm, type FieldErrors } from "react-hook-form";
 import useRenderCount from "../Utils/getRenderCount";
+import { TextField } from "../Controls/TextField";
 
 type FoodDeliveryFormType = {
   orderNo: number;
@@ -46,7 +47,7 @@ export default function FoodDeliveryForm() {
       {/* ORDER NO  */}
       <div className="flex flex-col-2 my-4 ">
         <div className="flex col-2 gap-4">
-          <input
+          <TextField
             disabled
             {...register("orderNo")}
             type="text"
@@ -56,7 +57,7 @@ export default function FoodDeliveryForm() {
 
           {/* MOBILE  */}
           <div className="flex flex-col">
-            <input
+            <TextField
               {...register("mobile", {
                 minLength: {
                   value: 10,
@@ -74,10 +75,8 @@ export default function FoodDeliveryForm() {
               type="text"
               className="form-control border border-white-400 px-4"
               placeholder="Mobile"
+              error={errors.mobile}
             />
-            {errors.mobile && (
-              <p className="text-red-500 text-sm">{errors.mobile.message}</p>
-            )}
           </div>
         </div>
       </div>
@@ -85,28 +84,25 @@ export default function FoodDeliveryForm() {
       {/* CUSTOMER NAME  */}
       <div className="flex flex-col-2 my-4 ">
         <div className="flex col-2 gap-4">
-          <div className="flex flex-col">
-            <input
-              {...register("customerName", {
-                required: {
-                  value: true,
-                  message: "This field is requried",
-                },
-              })}
-              type="text"
-              className="form-control border border-white-400 px-4"
-              placeholder="Customer Name"
-            />
-            {errors.customerName && (
-              <p className="text-red-500 text-sm">
-                {errors.customerName.message}
-              </p>
-            )}
-          </div>
+          <TextField
+            type="text"
+            className="form-control border border-white-400 px-4"
+            placeholder="Customer Name"
+            {...register("customerName", {
+              required: {
+                value: true,
+                message: "This field is requried",
+              },
+            })}
+            error={errors.customerName}
+          />
 
           {/* EMAIL  */}
           <div className="flex flex-col">
-            <input
+            <TextField
+              type="pattern"
+              className="form-control border border-white-400 px-4"
+              placeholder="Email"
               {...register("email", {
                 pattern: {
                   message: "Incorrect Format",
@@ -127,13 +123,8 @@ export default function FoodDeliveryForm() {
                   },
                 },
               })}
-              type="pattern"
-              className="form-control border border-white-400 px-4"
-              placeholder="Email"
+              error={errors.email}
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email.message}</p>
-            )}
           </div>
         </div>
       </div>
