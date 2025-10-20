@@ -1,13 +1,31 @@
 import { useForm, type FieldErrors } from "react-hook-form";
 import useRenderCount from "../Utils/getRenderCount";
 import { TextField } from "../Controls/TextField";
+import { Select } from "../Controls/Select";
+import type { SelectOptionType } from "../Types";
 
 type FoodDeliveryFormType = {
   orderNo: number;
   customerName: string;
   mobile: string;
   email: string;
+  paymentMethod?: string;
+  deliveryIn: number;
 };
+
+const paymentOptions: SelectOptionType[] = [
+  { value: "", text: "Select" },
+  { value: "online", text: "Paid Online" },
+  { value: "COD", text: "Cash On Delivery" },
+];
+
+const deliveryInOptions: SelectOptionType[] = [
+  { value: 0, text: "Select" },
+  { value: 30, text: "30 minutes" },
+  { value: 60, text: "1 hour" },
+  { value: 120, text: "2 hour" },
+  { value: 180, text: "3 hour" },
+];
 
 const RenderCount = useRenderCount();
 
@@ -24,6 +42,8 @@ export default function FoodDeliveryForm() {
       customerName: "",
       mobile: "",
       email: "",
+      paymentMethod: "",
+      deliveryIn: 0,
     },
   });
 
@@ -128,6 +148,30 @@ export default function FoodDeliveryForm() {
           </div>
         </div>
       </div>
+
+      {/* DROP DOWN */}
+      <div>list of ordered food items</div>
+      <div className="flex flex-row mb-2">
+        <div className="flex flex-col">
+          {/* PAYMENT METHOD */}
+          <Select
+            options={paymentOptions}
+            {...register("paymentMethod", {
+              required: "This field is required",
+            })}
+            error={errors.paymentMethod}
+          />
+        </div>
+        <div className="flex flex-col">
+          {/* DELIVERY IN */}
+          <Select
+            options={deliveryInOptions}
+            {...register("deliveryIn")}
+            error={errors.deliveryIn}
+          />
+        </div>
+      </div>
+      <div>delivery address</div>
 
       <button type="submit" className="bg-blue-600 px-6 py-2 rounded-xl">
         Submit
